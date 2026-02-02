@@ -830,7 +830,7 @@ x86_64-*-gnu*)
 	md_unwind_header=i386/gnu-unwind.h
 	;;
 x86_64-*-strata*)
-	tmake_file="$tmake_file i386/t-crtstuff t-crtstuff-pic t-libgcc-pic i386/t-strata"
+	tmake_file="$tmake_file i386/t-crtstuff t-crtstuff-pic t-libgcc-pic t-slibgcc t-slibgcc-elf-ver t-slibgcc-nolc-override t-slibgcc-strata"
 	extra_parts="$extra_parts crtbegin.o crtend.o"
 	;;
 i[34567]86-pc-msdosdjgpp*)

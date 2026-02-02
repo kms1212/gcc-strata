@@ -2668,6 +2668,17 @@ solaris*)
   postinstall_cmds='chmod +x $lib'
   ;;
 
+strata*)
+  version_type=linux
+  need_lib_prefix=no
+  need_version=no
+  library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}$major $libname${shared_ext}'
+  soname_spec='${libname}${release}${shared_ext}$major'
+  shlibpath_var=LD_LIBRARY_PATH
+  shlibpath_overrides_runpath=yes
+  hardcode_into_libs=yes
+  ;;
+
 sunos4*)
   version_type=sunos
   library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${shared_ext}$versuffix'
@@ -3221,6 +3232,10 @@ rdos*)
   ;;
 
 solaris*)
+  lt_cv_deplibs_check_method=pass_all
+  ;;
+
+strata*)
   lt_cv_deplibs_check_method=pass_all
   ;;
 
@@ -4654,6 +4669,15 @@ _LT_EOF
 
 _LT_EOF
       elif $LD --help 2>&1 | $GREP ': supported targets:.* elf' > /dev/null; then
+	_LT_TAGVAR(archive_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags ${wl}-soname $wl$soname -o $lib'
+	_LT_TAGVAR(archive_expsym_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags ${wl}-soname $wl$soname ${wl}-retain-symbols-file $wl$export_symbols -o $lib'
+      else
+	_LT_TAGVAR(ld_shlibs, $1)=no
+      fi
+      ;;
+
+    strata*)
+      if $LD --help 2>&1 | $GREP ': supported targets:.* elf' > /dev/null; then
 	_LT_TAGVAR(archive_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags ${wl}-soname $wl$soname -o $lib'
 	_LT_TAGVAR(archive_expsym_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags ${wl}-soname $wl$soname ${wl}-retain-symbols-file $wl$export_symbols -o $lib'
       else
