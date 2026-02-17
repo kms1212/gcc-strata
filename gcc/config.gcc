@@ -2160,8 +2160,18 @@ i[34567]86-*-solaris2* | x86_64-*-solaris2*)
 		esac
 	fi
 	;;
-x86_64-*-strata*)
-	tm_file="${tm_file} i386/unix.h i386/att.h elfos.h gnu-user.h glibc-stdint.h i386/x86-64.h strata-folios.h "
+i[34567]86-*-strata*|x86_64-*-strata*)
+	tm_file="${tm_file} i386/unix.h i386/att.h elfos.h gnu-user.h glibc-stdint.h"
+	case ${target} in
+	  x86_64-*)
+	  	need_64bit_isa=yes
+		tm_file="${tm_file} i386/x86-64.h i386/strata-folios64.h"
+		;;
+	  i[34567]86-*)
+		tm_file="${tm_file} i386/strata-folios.h"
+		;;
+	esac
+	tm_file="${tm_file} strata-folios.h"
 	gas=yes
 	gnu_ld=yes
 	default_use_cxa_atexit=yes

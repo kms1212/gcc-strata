@@ -32,9 +32,7 @@
     builtin_define("__STRATA__"); \
     builtin_assert("system=strata"); \
     \
-    builtin_define("__folios__"); \
-    builtin_define("__FOLIOS__"); \
-    builtin_assert("system=folios"); \
+    STRATA_CPP_BUILTINS(); \
     \
     builtin_define("__unix__"); \
     builtin_define("__unix"); \
@@ -44,13 +42,16 @@
     builtin_define("__ELF__"); \
     \
     builtin_define("_REENTRANT"); \
-  } while (0);
+  } while (0)
 
 #undef STARTFILE_SPEC
-#define STARTFILE_SPEC "%{!shared:crt0%O%s} crti%O%s crtbegin%O%s"
+#define STARTFILE_SPEC \
+  "%{!shared:%{static:crt1%O%s; pie:Scrt1%O%s; :crt1%O%s}} " \
+  "crti%O%s %{static:crtbeginT%O%s; shared|pie:crtbeginS%O%s; :crtbegin%O%s}"
 
 #undef ENDFILE_SPEC
-#define ENDFILE_SPEC "crtend%O%s crtn%O%s"
+#define ENDFILE_SPEC \
+  "%{static:crtend%O%s; shared|pie:crtendS%O%s; :crtend%O%s} crtn%O%s"
 
 #undef CC1_SPEC
 #define CC1_SPEC  \
@@ -61,12 +62,19 @@
 #undef LIB_SPEC
 #define LIB_SPEC "-lc"
 
+#ifndef STRATA_EXTRA_LINK_SPEC
+  #define STRATA_EXTRA_LINK_SPEC ""
+#endif
+
 #undef LINK_SPEC
 #define LINK_SPEC \
-    "%{shared:-shared} %{static:-static}" \
-    "%{!shared: %{!static: %{rdynamic:-export-dynamic}}}" \
+    STRATA_EXTRA_LINK_SPEC " " \
+    "%{shared:-shared} %{static:-static} " \
+    "%{static-pie:-static -pie --no-dynamic-linker -z text} " \
+    "%{!shared:%{!static:%{!r:-pie}}} " \
+    "%{!shared:%{!static:%{rdynamic:-export-dynamic}}} " \
     "%{!shared:%{!static:%{!dynamic-linker:-dynamic-linker=" \
-        "/Packages/folisdk/Current/lib/ld-musl-x86_64.so.1" \
+        STRATA_DYNAMIC_LINKER \
     "}}}"
 
 #undef GTHREAD_USE_WEAK
