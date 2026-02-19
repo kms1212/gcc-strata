@@ -22,9 +22,13 @@
    see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
    <http://www.gnu.org/licenses/>.  */
 
-#define STRATA_CPP_BUILTINS() \
-  do { \
-    builtin_define("__folios__"); \
-    builtin_define("__FOLIOS__"); \
-    builtin_assert("system=folios"); \
-  } while (0)
+#define STRATA_DYNAMIC_LINKER "/Packages/folisdk/Current/lib/ld-musl-i386.so.1"
+
+#define STRATA_EXTRA_LINK_SPEC "-m elf_i386_strata"
+
+
+#undef SIZE_TYPE
+#define SIZE_TYPE "unsigned int"
+
+#undef PTRDIFF_TYPE
+#define PTRDIFF_TYPE "int"

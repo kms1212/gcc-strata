@@ -2165,17 +2165,26 @@ i[34567]86-*-strata*|x86_64-*-strata*)
 	case ${target} in
 	  x86_64-*)
 	  	need_64bit_isa=yes
-		tm_file="${tm_file} i386/x86-64.h i386/strata-folios64.h"
+		tm_file="${tm_file} i386/x86-64.h i386/strata64.h"
 		;;
 	  i[34567]86-*)
-		tm_file="${tm_file} i386/strata-folios.h"
+		tm_file="${tm_file} i386/strata.h"
 		;;
 	esac
-	tm_file="${tm_file} strata-folios.h"
+	case ${target} in
+	  *-*-folios)
+		tm_file="${tm_file} i386/strata-folios.h"
+	  	;;
+	esac
+	tm_file="${tm_file} strata.h"
 	gas=yes
 	gnu_ld=yes
 	default_use_cxa_atexit=yes
 	tmake_file="${tmake_file} i386/t-crtstuff t-libgcc-pic t-slibgcc i386/t-strata"
+	extra_options="$extra_options strata.opt"
+	if test x$enable_threads = xyes; then
+		thread_file='posix'
+	fi
 	;;
 i[4567]86-wrs-vxworks*|x86_64-wrs-vxworks7*)
 	tm_file="${tm_file} i386/unix.h i386/att.h elfos.h"

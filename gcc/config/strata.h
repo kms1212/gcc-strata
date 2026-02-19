@@ -70,6 +70,7 @@
 #define LINK_SPEC \
     STRATA_EXTRA_LINK_SPEC " " \
     "%{shared:-shared} %{static:-static} " \
+    "%{pthread:-lpthread} " \
     "%{static-pie:-static -pie --no-dynamic-linker -z text} " \
     "%{!shared:%{!static:%{!r:-pie}}} " \
     "%{!shared:%{!static:%{rdynamic:-export-dynamic}}} " \
