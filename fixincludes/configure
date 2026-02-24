@@ -2207,8 +2207,8 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 # libtool.m4 - Configure libtool for the host system. -*-Autoconf-*-
 #
-#   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
-#                 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
+#   Copyright (C) 1996-2001, 2003-2019, 2021-2024 Free Software
+#   Foundation, Inc.
 #   Written by Gordon Matzigkeit, 1996
 #
 # This file is free software; the Free Software Foundation gives
@@ -2217,7 +2217,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 
 
-# serial 56 LT_INIT
+# serial 63 LT_INIT
 
 
 # LT_PREREQ(VERSION)
@@ -2277,16 +2277,23 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 
 
+# _LT_PREPARE_CC_BASENAME
+# -----------------------
+# _LT_PREPARE_CC_BASENAME
+
+
 # _LT_CC_BASENAME(CC)
 # -------------------
-# Calculate cc_basename.  Skip known compiler wrappers and cross-prefix.
+# It would be clearer to call AC_REQUIREs from _LT_PREPARE_CC_BASENAME,
+# but that macro is also expanded into generated libtool script, which
+# arranges for $SED and $ECHO to be set by different means.
 
 
 
 # _LT_FILEUTILS_DEFAULTS
 # ----------------------
 # It is okay to use these file commands and assume they have been set
-# sensibly after `m4_require([_LT_FILEUTILS_DEFAULTS])'.
+# sensibly after 'm4_require([_LT_FILEUTILS_DEFAULTS])'.
 # _LT_FILEUTILS_DEFAULTS
 
 
@@ -2302,9 +2309,9 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 # _LT_PROG_LTMAIN
 # ---------------
-# Note that this code is called both from `configure', and `config.status'
+# Note that this code is called both from 'configure', and 'config.status'
 # now that we use AC_CONFIG_COMMANDS to generate libtool.  Notably,
-# `config.status' has no value for ac_aux_dir unless we are using Automake,
+# 'config.status' has no value for ac_aux_dir unless we are using Automake,
 # so we pass a copy along to make sure it has a sensible value anyway.
 # _LT_PROG_LTMAIN
 
@@ -2315,7 +2322,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 # So that we can recreate a full libtool script including additional
 # tags, we accumulate the chunks of code to send to AC_CONFIG_COMMANDS
-# in macros and then make a single call at the end using the `libtool'
+# in macros and then make a single call at the end using the 'libtool'
 # label.
 
 
@@ -2403,8 +2410,8 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 # _LT_CONFIG_STATUS_DECLARE([VARNAME])
 # ------------------------------------
-# Quote a variable value, and forward it to `config.status' so that its
-# declaration there will have the same value as in `configure'.  VARNAME
+# Quote a variable value, and forward it to 'config.status' so that its
+# declaration there will have the same value as in 'configure'.  VARNAME
 # must have a single quote delimited value for this to work.
 
 
@@ -2439,7 +2446,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # _LT_LIBTOOL_CONFIG_VARS
 # -----------------------
 # Produce commented declarations of non-tagged libtool config variables
-# suitable for insertion in the LIBTOOL CONFIG section of the `libtool'
+# suitable for insertion in the LIBTOOL CONFIG section of the 'libtool'
 # script.  Tagged libtool config variables (even for the LIBTOOL CONFIG
 # section) are produced by _LT_LIBTOOL_TAG_VARS.
 
@@ -2460,8 +2467,8 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # Send accumulated output to $CONFIG_STATUS.  Thanks to the lists of
 # variables for single and double quote escaping we saved from calls
 # to _LT_DECL, we can put quote escaped variables declarations
-# into `config.status', and then the shell code to quote escape them in
-# for loops in `config.status'.  Finally, any additional code accumulated
+# into 'config.status', and then the shell code to quote escape them in
+# for loops in 'config.status'.  Finally, any additional code accumulated
 # from calls to _LT_CONFIG_LIBTOOL_INIT is expanded.
 #_LT_CONFIG_COMMANDS
 
@@ -2474,7 +2481,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # Generate a child script FILE with all initialization necessary to
 # reuse the environment learned by the parent script, and make the
 # file executable.  If COMMENT is supplied, it is inserted after the
-# `#!' sequence but before initialization text begins.  After this
+# '#!' sequence but before initialization text begins.  After this
 # macro, additional text can be appended to FILE to form the body of
 # the child script.  The macro ends with non-zero status if the
 # file could not be fully written (such as if the disk is full).
@@ -2483,7 +2490,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # LT_OUTPUT
 # ---------
 # This macro allows early generation of the libtool script (before
-# AC_OUTPUT is called), incase it is used in configure for compilation
+# AC_OUTPUT is called), in case it is used in configure for compilation
 # tests.
 # LT_OUTPUT
 
@@ -2519,6 +2526,9 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # _LT_LANG(LANGNAME)
 # ------------------
 # _LT_LANG
+
+
+#m4_ifndef
 
 
 # _LT_LANG_DEFAULT_CONFIG
@@ -2641,24 +2651,27 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # the simple link test code.
 # _LT_LINKER_BOILERPLATE
 
+
 # _LT_REQUIRED_DARWIN_CHECKS
 # -------------------------
 
 
 
-# _LT_DARWIN_LINKER_FEATURES
-# --------------------------
-# Checks for linker and compiler features on Darwin / macOS / iOS
+# _LT_DARWIN_LINKER_FEATURES([TAG])
+# ---------------------------------
+# Checks for linker and compiler features on darwin
 
 
-# _LT_SYS_MODULE_PATH_AIX
-# -----------------------
+# _LT_SYS_MODULE_PATH_AIX([TAGNAME])
+# ----------------------------------
 # Links a minimal program and checks the executable
 # for the system default hardcoded library path. In most cases,
 # this is /usr/lib:/lib, but when the MPI compilers are used
 # the location of the communication and MPI libs are included too.
 # If we don't find anything, use the default library path according
 # to the aix ld manual.
+# Store the results from the different compilers for each TAGNAME.
+# Allow to override them for all tags through lt_cv_aix_libpath.
 # _LT_SYS_MODULE_PATH_AIX
 
 
@@ -2672,14 +2685,23 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # -----------------------
 # Find how we can fake an echo command that does not interpret backslash.
 # In particular, with Autoconf 2.60 or later we add some code to the start
-# of the generated configure script which will find a shell with a builtin
-# printf (which we can use as an echo command).
+# of the generated configure script that will find a shell with a builtin
+# printf (that we can use as an echo command).
 # _LT_PROG_ECHO_BACKSLASH
+
+
+# _LT_WITH_SYSROOT
+# ----------------
 
 
 # _LT_ENABLE_LOCK
 # ---------------
 # _LT_ENABLE_LOCK
+
+
+# _LT_PROG_AR
+# -----------
+# _LT_PROG_AR
 
 
 # _LT_CMD_OLD_ARCHIVE
@@ -2835,6 +2857,12 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # _LT_CMD_STRIPLIB
 
 
+# _LT_PREPARE_MUNGE_PATH_LIST
+# ---------------------------
+# Make sure func_munge_path_list() is defined correctly.
+# _LT_PREPARE_PATH_LIST
+
+
 # _LT_SYS_DYNAMIC_LINKER([TAG])
 # -----------------------------
 # PORTME Fill in your ld.so characteristics
@@ -2843,7 +2871,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 # _LT_PATH_TOOL_PREFIX(TOOL)
 # --------------------------
-# find a file program which can recognize shared library
+# find a file program that can recognize shared library
 # _LT_PATH_TOOL_PREFIX
 
 # Old name:
@@ -2870,7 +2898,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 # _LT_PATH_MAGIC
 # --------------
-# find a file program which can recognize a shared library
+# find a file program that can recognize a shared library
 # _LT_PATH_MAGIC
 
 
@@ -2932,6 +2960,18 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # _LT_CMD_RELOAD
 
 
+# _LT_PATH_DD
+# -----------
+# find a working dd
+# _LT_PATH_DD
+
+
+# _LT_CMD_TRUNCATE
+# ----------------
+# find command to truncate a binary pipe
+# _LT_CMD_TRUNCATE
+
+
 # _LT_CHECK_MAGIC_METHOD
 # ----------------------
 # how to check for library dependencies
@@ -2941,8 +2981,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 # LT_PATH_NM
 # ----------
-# find the pathname to a BSD- or MS-compatible name lister, and any flags
-# needed to make it compatible
+# find the pathname to a BSD- or MS-compatible name lister
 # LT_PATH_NM
 
 # Old names:
@@ -2984,6 +3023,26 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # about autoupdate's warning because that contains
 # information on what to do *after* running autoupdate.
 
+
+# _LT_CHECK_SHAREDLIB_FROM_LINKLIB
+# --------------------------------
+# how to determine the name of the shared library
+# associated with a specific link library.
+#  -- PORTME fill in with the dynamic library characteristics
+# _LT_CHECK_SHAREDLIB_FROM_LINKLIB
+
+
+# _LT_PATH_MANIFEST_TOOL
+# ----------------------
+# locate the manifest tool
+# _LT_PATH_MANIFEST_TOOL
+
+
+# _LT_DLL_DEF_P([FILE])
+# ---------------------
+# True iff FILE is a Windows DLL '.def' file.
+# Keep in sync with func_dll_def_p in the libtool script
+# _LT_DLL_DEF_P
 
 
 # LT_LIB_M
@@ -3038,7 +3097,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # ------------------------
 # Ensure that the configuration variables for a C compiler are suitably
 # defined.  These variables are subsequently used by _LT_CONFIG to write
-# the compiler configuration to `libtool'.
+# the compiler configuration to 'libtool'.
 # _LT_LANG_C_CONFIG
 
 
@@ -3046,8 +3105,23 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # --------------------------
 # Ensure that the configuration variables for a C++ compiler are suitably
 # defined.  These variables are subsequently used by _LT_CONFIG to write
-# the compiler configuration to `libtool'.
+# the compiler configuration to 'libtool'.
 # _LT_LANG_CXX_CONFIG
+
+
+# _LT_FUNC_STRIPNAME_CNF
+# ----------------------
+# func_stripname_cnf prefix suffix name
+# strip PREFIX and SUFFIX off of NAME.
+# PREFIX and SUFFIX must not contain globbing or regex special
+# characters, hashes, percent signs, but SUFFIX may contain a leading
+# dot (in which case that matches only a dot).
+#
+# This function is identical to the (non-XSI) version of func_stripname,
+# except this one can be used by m4 code that may be executed by configure,
+# rather than the libtool script.
+# _LT_FUNC_STRIPNAME_CNF
+
 
 # _LT_SYS_HIDDEN_LIBDEPS([TAGNAME])
 # ---------------------------------
@@ -3062,7 +3136,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # --------------------------
 # Ensure that the configuration variables for a Fortran 77 compiler are
 # suitably defined.  These variables are subsequently used by _LT_CONFIG
-# to write the compiler configuration to `libtool'.
+# to write the compiler configuration to 'libtool'.
 # _LT_LANG_F77_CONFIG
 
 
@@ -3070,7 +3144,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # -------------------------
 # Ensure that the configuration variables for a Fortran compiler are
 # suitably defined.  These variables are subsequently used by _LT_CONFIG
-# to write the compiler configuration to `libtool'.
+# to write the compiler configuration to 'libtool'.
 # _LT_LANG_FC_CONFIG
 
 
@@ -3078,15 +3152,23 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # --------------------------
 # Ensure that the configuration variables for the GNU Java Compiler compiler
 # are suitably defined.  These variables are subsequently used by _LT_CONFIG
-# to write the compiler configuration to `libtool'.
+# to write the compiler configuration to 'libtool'.
 # _LT_LANG_GCJ_CONFIG
+
+
+# _LT_LANG_GO_CONFIG([TAG])
+# --------------------------
+# Ensure that the configuration variables for the GNU Go compiler
+# are suitably defined.  These variables are subsequently used by _LT_CONFIG
+# to write the compiler configuration to 'libtool'.
+# _LT_LANG_GO_CONFIG
 
 
 # _LT_LANG_RC_CONFIG([TAG])
 # -------------------------
 # Ensure that the configuration variables for the Windows resource compiler
 # are suitably defined.  These variables are subsequently used by _LT_CONFIG
-# to write the compiler configuration to `libtool'.
+# to write the compiler configuration to 'libtool'.
 # _LT_LANG_RC_CONFIG
 
 
@@ -3113,6 +3195,11 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # then outputs the replacement expansion.  We do not care
 # about autoupdate's warning because that contains
 # information on what to do *after* running autoupdate.
+
+
+
+# LT_PROG_GO
+# ----------
 
 
 
@@ -3155,35 +3242,21 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # available, choose the one first in the user's PATH.
 
 
+# _LT_DECL_DLLTOOL
+# ----------------
+# Ensure DLLTOOL variable is set.
+
+
+# _LT_DECL_FILECMD
+# ----------------
+# Check for a file(cmd) program that can be used to detect file type and magic
+# _LD_DECL_FILECMD
 
 # _LT_DECL_SED
 # ------------
 # Check for a fully-functional sed program, that truncates
 # as few characters as possible.  Prefer GNU sed if found.
 # _LT_DECL_SED
-
-#m4_ifndef
-
-# Old name:
-# This is what autoupdate's m4 run will expand.  It fires
-# the warning (with _au_warn_XXX), outputs it into the
-# updated configure.ac (with AC_DIAGNOSE), and then outputs
-# the replacement expansion.
-
-
-# This is an auxiliary macro that is also run when
-# autoupdate runs m4.  It simply calls m4_warning, but
-# we need a wrapper so that each warning is emitted only
-# once.  We break the quoting in m4_warning's argument in
-# order to expand this macro's arguments, not AU_DEFUN's.
-
-
-# Finally, this is the expansion that is picked up by
-# autoconf.  It tells the user to run autoupdate, and
-# then outputs the replacement expansion.  We do not care
-# about autoupdate's warning because that contains
-# information on what to do *after* running autoupdate.
-
 
 
 # _LT_CHECK_SHELL_FEATURES
@@ -3193,10 +3266,12 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 # _LT_CHECK_SHELL_FEATURES
 
 
-# _LT_PROG_XSI_SHELLFNS
-# ---------------------
-# Bourne and XSI compatible variants of some useful shell functions.
-
+# _LT_PATH_CONVERSION_FUNCTIONS
+# -----------------------------
+# Determine what file name conversion functions should be used by
+# func_to_host_file (and, implicitly, by func_to_host_path).  These are needed
+# for certain cross-compile configurations and native mingw.
+# _LT_PATH_CONVERSION_FUNCTIONS
 
 # Make sure we can run config.sub.
 $SHELL "$ac_aux_dir/config.sub" sun4 >/dev/null 2>&1 ||

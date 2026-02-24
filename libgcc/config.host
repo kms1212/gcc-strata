@@ -829,12 +829,17 @@ x86_64-*-gnu*)
 	tm_file="${tm_file} i386/elf-lib.h"
 	md_unwind_header=i386/gnu-unwind.h
 	;;
-i[34567]86-*-strata* |x86_64-*-strata*)
-	tmake_file="$tmake_file i386/t-crtstuff t-crtstuff-pic t-libgcc-pic t-slibgcc t-slibgcc-elf-ver t-slibgcc-nolc-override t-slibgcc-strata"
+i[34567]86-*-strata* | x86_64-*-strata*)
+	tmake_file="$tmake_file i386/t-crtstuff t-crtstuff-pic t-libgcc-pic t-slibgcc t-slibgcc-elf-ver t-slibgcc-nolc-override"
 	case ${host} in
 	  i[34567]86-*)
 	    extra_parts="${extra_parts} crtprec32.o crtprec64.o crtprec80.o crtfastmath.o"
 	    tmake_file="${tmake_file} i386/t-crtpc t-crtfm"
+	    ;;
+	esac
+	case ${host} in
+	  *-*-*-folios*)
+	    tmake_file="${tmake_file} t-slibgcc-folios"
 	    ;;
 	esac
 	extra_parts="$extra_parts crtbegin.o crtend.o crtbeginS.o crtendS.o crtbeginT.o"

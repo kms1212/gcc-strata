@@ -1,0 +1,32 @@
+INTERNAL_CFLAGS += -fPIC
+CRTSTUFF_T_CFLAGS += -fPIC
+LIBGCC2_CFLAGS += -fPIC
+TARGET_LIBGCC2_CFLAGS += -fPIC
+
+LIB2ADD = 
+LIB2ADD_ST =
+
+override LIBGCC_OUTPUT = 
+
+override STLIB_EXT = sl
+
+SHLIB_EXT = .dl
+SHLIB_SOLINK = @shlib_base_name@.dl
+SHLIB_SONAME = @shlib_base_name@.dl.$(SHLIB_SOVERSION)
+SHLIB_LDFLAGS += \
+    --no-pie \
+    -Wl,--allow-multiple-definition \
+    -Wl,--allow-shlib-undefined \
+    -Wl,--unresolved-symbols=ignore-all \
+    -Wl,--gc-sections \
+    -nostartfiles \
+    -Wl,-soname=$(SHLIB_SONAME)
+
+LD_FOR_TARGET = $(LD)
+override AR_CREATE_FOR_TARGET = \
+    /bin/sh -c ' \
+        OUT="$$1"; shift; \
+        $(LD_FOR_TARGET) -r -o "$$OUT" $$(printf "%s\n" "$$@" | sort -u)' --
+override AR_EXTRACT_FOR_TARGET = cp
+override RANLIB = :
+override RANLIB_FOR_TARGET = :

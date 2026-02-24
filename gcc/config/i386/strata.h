@@ -22,11 +22,6 @@
    see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
    <http://www.gnu.org/licenses/>.  */
 
-#define STRATA_DYNAMIC_LINKER "/Packages/folisdk/Current/lib/ld-musl-i386.so.1"
-
-#define STRATA_EXTRA_LINK_SPEC "-m elf_i386_strata"
-
-
 #undef SIZE_TYPE
 #define SIZE_TYPE "unsigned int"
 

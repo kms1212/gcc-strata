@@ -1,1 +1,0 @@
-SHLIB_LDFLAGS += --no-pie -Wl,--allow-shlib-undefined -Wl,--unresolved-symbols=ignore-all -nostartfiles

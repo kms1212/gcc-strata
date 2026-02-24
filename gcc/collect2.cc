@@ -1467,7 +1467,8 @@ main (int argc, char **argv)
       else if ((p = strrchr (arg, '.')) != (char *) 0
 	       && (strcmp (p, ".o") == 0 || strcmp (p, ".a") == 0
 		   || strcmp (p, ".so") == 0 || strcmp (p, ".lo") == 0
-		   || strcmp (p, ".obj") == 0))
+		   || strcmp (p, ".obj") == 0 || strcmp (p, ".sl") == 0
+       || strcmp (p, ".dl") == 0))
 	{
 	  if (first_file)
 	    {

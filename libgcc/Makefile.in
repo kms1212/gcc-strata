@@ -80,6 +80,9 @@ INSTALL_PARTS = $(EXTRA_PARTS)
 
 objext = .o
 
+STLIB_EXT = a
+LIBGCC_OUTPUT = libgcc.$(STLIB_EXT)
+
 AR = @AR@
 AR_FLAGS = rc
 
@@ -138,7 +141,7 @@ clean:
 	-rm -f libgcc_tm.stamp stmp-ldirs
 	-rm -f *$(objext)
 	-rm -f *.dep
-	-rm -f *.a
+	-rm -f *.$(STLIB_EXT)
 	-rm -f libunwind$(SHLIB_EXT)
 	-rm -f libgcc_s*
 	@$(MULTICLEAN) multi-clean DO=clean
@@ -242,7 +245,7 @@ else
 DECNUMINC =
 endif
 
-# Options to use when compiling libgcc2.a.
+# Options to use when compiling libgcc2.$(STLIB_EXT).
 #
 LIBGCC2_DEBUG_CFLAGS = -g
 LIBGCC2_CFLAGS = -O2 $(LIBGCC2_INCLUDES) $(GCC_CFLAGS) $(HOST_LIBGCC2_CFLAGS) \
@@ -250,11 +253,11 @@ LIBGCC2_CFLAGS = -O2 $(LIBGCC2_INCLUDES) $(GCC_CFLAGS) $(HOST_LIBGCC2_CFLAGS) \
 		 -fbuilding-libgcc -fno-stack-protector \
 		 $(INHIBIT_LIBC_CFLAGS)
 
-# Additional options to use when compiling libgcc2.a.
+# Additional options to use when compiling libgcc2.$(STLIB_EXT).
 # Some targets override this to -isystem include
 LIBGCC2_INCLUDES =
 
-# Additional target-dependent options for compiling libgcc2.a.
+# Additional target-dependent options for compiling libgcc2.$(STLIB_EXT).
 HOST_LIBGCC2_CFLAGS =
 
 PICFLAG = @PICFLAG@
@@ -865,7 +868,7 @@ libgcc-s-objects += $(addsuffix _s$(objext),$(basename $(notdir $(LIB2ADD))))
 endif
 
 # Build LIB2ADDEH, LIB2ADDEHSTATIC, and LIB2ADDEHSHARED.  If we don't have
-# libgcc_eh.a, only LIB2ADDEH matters.  If we do, only LIB2ADDEHSTATIC and
+# libgcc_eh.$(STLIB_EXT), only LIB2ADDEH matters.  If we do, only LIB2ADDEHSTATIC and
 # LIB2ADDEHSHARED matter.  (Usually all three are identical.)
 
 c_flags := -fexceptions
@@ -879,7 +882,7 @@ iter-items := $(sort $(LIB2ADDEHSTATIC) $(LIB2ADDEHSHARED))
 -include $(iterator)
 
 else
-# Not shared.  LIB2ADDEH are added to libgcc.a.
+# Not shared.  LIB2ADDEH are added to libgcc.$(STLIB_EXT).
 
 libgcc-objects += $(addsuffix $(objext),$(basename $(notdir $(LIB2ADDEH))))
 
@@ -943,12 +946,12 @@ $(libgcov-driver-objects): %$(objext): $(srcdir)/libgcov-driver.c \
 
 
 # Static libraries.
-libgcc.a: $(libgcc-objects)
-libgcov.a: $(libgcov-objects)
-libunwind.a: $(libunwind-objects)
-libgcc_eh.a: $(libgcc-eh-objects)
+libgcc.$(STLIB_EXT): $(libgcc-objects)
+libgcov.$(STLIB_EXT): $(libgcov-objects)
+libunwind.$(STLIB_EXT): $(libunwind-objects)
+libgcc_eh.$(STLIB_EXT): $(libgcc-eh-objects)
 
-libgcc.a libgcov.a libunwind.a libgcc_eh.a:
+libgcc.$(STLIB_EXT) libgcov.$(STLIB_EXT) libunwind.$(STLIB_EXT) libgcc_eh.$(STLIB_EXT):
 	-rm -f $@
 
 	objects="$(objects)";					\
@@ -962,17 +965,17 @@ libgcc.a libgcov.a libunwind.a libgcc_eh.a:
 
 	$(RANLIB) $@
 
-all: libgcc.a
+all: libgcc.$(STLIB_EXT)
 ifeq ($(enable_gcov),yes)
-all: libgcov.a
+all: libgcov.$(STLIB_EXT)
 endif
 
 ifneq ($(LIBUNWIND),)
-all: libunwind.a
+all: libunwind.$(STLIB_EXT)
 endif
 
 ifeq ($(enable_shared),yes)
-all: libgcc_eh.a libgcc_s$(SHLIB_EXT)
+all: libgcc_eh.$(STLIB_EXT) libgcc_s$(SHLIB_EXT)
 ifneq ($(LIBUNWIND),)
 all: libunwind$(SHLIB_EXT)
 libgcc_s$(SHLIB_EXT): libunwind$(SHLIB_EXT)
@@ -1000,7 +1003,7 @@ libgcc-std.ver: $(srcdir)/libgcc-std.ver.in
 	sed -e 's/__PFX__/$(LIBGCC_VER_GNU_PREFIX)/g' \
 	    -e 's/__FIXPTPFX__/$(LIBGCC_VER_FIXEDPOINT_GNU_PREFIX)/g' < $< > $@
 
-libgcc_s$(SHLIB_EXT): $(libgcc-s-objects) $(extra-parts) libgcc.a
+libgcc_s$(SHLIB_EXT): $(libgcc-s-objects) $(extra-parts) libgcc.$(STLIB_EXT)
 	# @multilib_flags@ is still needed because this may use
 	# $(GCC_FOR_TARGET) and $(LIBGCC2_CFLAGS) directly.
 	# @multilib_dir@ is not really necessary, but sometimes it has
@@ -1008,7 +1011,7 @@ libgcc_s$(SHLIB_EXT): $(libgcc-s-objects) $(extra-parts) libgcc.a
 	$(mkinstalldirs) $(MULTIDIR)
 	$(subst @multilib_flags@,$(CFLAGS) -B./,$(subst \
 		@multilib_dir@,$(MULTIDIR),$(subst \
-		@shlib_objs@,$(objects) libgcc.a,$(subst \
+		@shlib_objs@,$(objects) $(LIBGCC_OUTPUT),$(subst \
 		@shlib_base_name@,libgcc_s,$(subst \
 		@shlib_map_file@,$(mapfile),$(subst \
 		@shlib_slibdir_qual@,$(MULTIOSSUBDIR),$(subst \
@@ -1112,7 +1115,7 @@ libgcc-extra-parts: $(EXTRA_PARTS)
 	  rm -f $(gcc_objdir)$(MULTISUBDIR)/$$file;		\
 	  $(INSTALL_DATA) $$file $(gcc_objdir)$(MULTISUBDIR)/;	\
 	  case $$file in 					\
-	    *.a)						\
+	    *.$(STLIB_EXT))						\
 	      $(RANLIB) $(gcc_objdir)$(MULTISUBDIR)/$$file ;;	\
 	  esac;							\
 	done
@@ -1166,9 +1169,9 @@ install-libunwind:
 
 	# NOTE: Maybe this should go into $(inst_libdir), but this
 	# is where the old mklibgcc.in put it.
-	$(INSTALL_DATA) libunwind.a $(DESTDIR)$(inst_slibdir)/
-	chmod 644 $(DESTDIR)$(inst_slibdir)/libunwind.a
-	$(RANLIB) $(DESTDIR)$(inst_slibdir)/libunwind.a
+	$(INSTALL_DATA) libunwind.$(STLIB_EXT) $(DESTDIR)$(inst_slibdir)/
+	chmod 644 $(DESTDIR)$(inst_slibdir)/libunwind.$(STLIB_EXT)
+	$(RANLIB) $(DESTDIR)$(inst_slibdir)/libunwind.$(STLIB_EXT)
 
 	$(subst @multilib_dir@,$(MULTIDIR),$(subst \
 		@shlib_base_name@,libunwind,$(subst \
@@ -1177,9 +1180,9 @@ install-libunwind:
 install-shared:
 	$(mkinstalldirs) $(DESTDIR)$(inst_libdir)
 
-	$(INSTALL_DATA) libgcc_eh.a $(DESTDIR)$(inst_libdir)/
-	chmod 644 $(DESTDIR)$(inst_libdir)/libgcc_eh.a
-	$(RANLIB) $(DESTDIR)$(inst_libdir)/libgcc_eh.a
+	$(INSTALL_DATA) libgcc_eh.$(STLIB_EXT) $(DESTDIR)$(inst_libdir)/
+	chmod 644 $(DESTDIR)$(inst_libdir)/libgcc_eh.$(STLIB_EXT)
+	$(RANLIB) $(DESTDIR)$(inst_libdir)/libgcc_eh.$(STLIB_EXT)
 
 	$(subst @multilib_dir@,$(MULTIDIR),$(subst \
 		@shlib_base_name@,libgcc_s,$(subst \
@@ -1188,13 +1191,13 @@ install-shared:
 install-leaf: $(install-shared) $(install-libunwind)
 	$(mkinstalldirs) $(DESTDIR)$(inst_libdir)
 
-	$(INSTALL_DATA) libgcc.a $(DESTDIR)$(inst_libdir)/
-	chmod 644 $(DESTDIR)$(inst_libdir)/libgcc.a
-	$(RANLIB) $(DESTDIR)$(inst_libdir)/libgcc.a
+	$(INSTALL_DATA) libgcc.$(STLIB_EXT) $(DESTDIR)$(inst_libdir)/
+	chmod 644 $(DESTDIR)$(inst_libdir)/libgcc.$(STLIB_EXT)
+	$(RANLIB) $(DESTDIR)$(inst_libdir)/libgcc.$(STLIB_EXT)
 ifeq ($(enable_gcov),yes)
-	$(INSTALL_DATA) libgcov.a $(DESTDIR)$(inst_libdir)/
-	chmod 644 $(DESTDIR)$(inst_libdir)/libgcov.a
-	$(RANLIB) $(DESTDIR)$(inst_libdir)/libgcov.a
+	$(INSTALL_DATA) libgcov.$(STLIB_EXT) $(DESTDIR)$(inst_libdir)/
+	chmod 644 $(DESTDIR)$(inst_libdir)/libgcov.$(STLIB_EXT)
+	$(RANLIB) $(DESTDIR)$(inst_libdir)/libgcov.$(STLIB_EXT)
 endif
 
 	parts="$(INSTALL_PARTS)";				\
@@ -1202,7 +1205,7 @@ endif
 	  rm -f $(DESTDIR)$(inst_libdir)/$$file;		\
 	  $(INSTALL_DATA) $$file $(DESTDIR)$(inst_libdir)/;	\
 	  case $$file in 					\
-	    *.a)						\
+	    *.$(STLIB_EXT))						\
 	      $(RANLIB) $(gcc_objdir)$(MULTISUBDIR)/$$file ;;	\
 	  esac;							\
 	done

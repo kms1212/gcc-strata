@@ -21,5 +21,3 @@
    a copy of the GCC Runtime Library Exception along with this program;
    see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
    <http://www.gnu.org/licenses/>.  */
-
-#define STRATA_DYNAMIC_LINKER "/Packages/folisdk/Current/lib/ld-musl-x86_64.so.1"
