@@ -140,7 +140,7 @@ along with GCC; see the file COPYING3.  If not see
 #endif
 
 #ifndef SHLIB_SUFFIX
-#define SHLIB_SUFFIX ".so"
+#define SHLIB_SUFFIX ".dl"
 #endif
 
 #ifdef USE_COLLECT2
@@ -2944,7 +2944,7 @@ resolve_lib_name (const char *name)
   char *lib_buf;
   int i, j, l = 0;
   /* Library extensions for AIX dynamic linking.  */
-  const char * const libexts[2] = {"a", "so"};
+  const char * const libexts[2] = {"sl", "dl"};
 
   for (i = 0; libpaths[i]; i++)
     if (libpaths[i]->max_len > l)
