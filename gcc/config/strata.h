@@ -53,8 +53,13 @@
 #define ENDFILE_SPEC \
   "%{static:crtend%O%s; shared|pie:crtendS%O%s; :crtend%O%s} crtn%O%s"
 
+#ifndef STRATA_EXTRA_CC1_SPEC
+  #define STRATA_EXTRA_CC1_SPEC ""
+#endif
+
 #undef CC1_SPEC
 #define CC1_SPEC  \
+    STRATA_EXTRA_CC1_SPEC " " \
     "%{!fno-pic:%{!fno-PIC:%{!fpic:%{!fPIC:" \
         "%{!fno-pie:%{!fno-PIE:%{!fpie:%{!fPIE: -fPIE}}}}" \
     "}}}}"

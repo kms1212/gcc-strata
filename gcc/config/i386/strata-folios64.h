@@ -30,7 +30,8 @@
   } while (0)
 
 #define STRATA_DYNAMIC_LINKER "/System/Processes/Current/RuntimeLinker.app"
-#define STRATA_EXTRA_LINK_SPEC "-m elf_x86_64_folios --allow-multiple-definition"
+#define STRATA_EXTRA_LINK_SPEC "-m elf_x86_64_folios --gc-sections"
+#define STRATA_EXTRA_CC1_SPEC "%{!fno-function-sections:-ffunction-sections} %{!fno-data-sections:-fdata-sections}"
 
 #undef TARGET_EXECUTABLE_SUFFIX
 #define TARGET_EXECUTABLE_SUFFIX ".app"
