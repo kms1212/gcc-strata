@@ -33,5 +33,8 @@
 #define STRATA_EXTRA_LINK_SPEC "-m elf_x86_64_folios %{!r:--gc-sections}"
 #define STRATA_EXTRA_CC1_SPEC "%{!fno-function-sections:-ffunction-sections} %{!fno-data-sections:-fdata-sections}"
 
+#undef TARGET_ASM_FILE_END
+#define TARGET_ASM_FILE_END file_end_indicate_exec_stack
+
 #undef TARGET_EXECUTABLE_SUFFIX
 #define TARGET_EXECUTABLE_SUFFIX ".app"
