@@ -67,6 +67,13 @@
 #undef LIB_SPEC
 #define LIB_SPEC "-lc"
 
+#ifndef STRATA_EXTRA_ASM_SPEC
+  #define STRATA_EXTRA_ASM_SPEC ""
+#endif
+
+#undef ASM_SPEC
+#define ASM_SPEC STRATA_EXTRA_ASM_SPEC
+
 #ifndef STRATA_EXTRA_LINK_SPEC
   #define STRATA_EXTRA_LINK_SPEC ""
 #endif
