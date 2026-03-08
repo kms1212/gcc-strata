@@ -65,7 +65,7 @@
     "}}}}"
 
 #undef LIB_SPEC
-#define LIB_SPEC "-lc"
+#define LIB_SPEC "-lc -lstrata"
 
 #ifndef STRATA_EXTRA_ASM_SPEC
   #define STRATA_EXTRA_ASM_SPEC ""
