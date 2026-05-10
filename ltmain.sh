@@ -5548,6 +5548,10 @@ func_extract_archives ()
       func_mkdir_p "$my_xdir"
 
       case $host in
+	  *-folios*)
+	my_oldobjs="$my_oldobjs $my_xabs"
+	continue
+	;;
       *-darwin*)
 	func_verbose "Extracting $my_xabs"
 	# Do not bother doing anything if just a dry run
