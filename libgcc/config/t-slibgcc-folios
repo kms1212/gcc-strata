@@ -26,7 +26,7 @@ LD_FOR_TARGET = $(LD)
 override AR_CREATE_FOR_TARGET = \
     /bin/sh -c ' \
         OUT="$$1"; shift; \
-        $(LD_FOR_TARGET) -r -o "$$OUT" $$(printf "%s\n" "$$@" | sort -u)' --
+        $(LD_FOR_TARGET) -r -o "$$OUT" $$(printf "%s\n" "$$@" | sort -u)' ar-create
 override AR_EXTRACT_FOR_TARGET = cp
 override RANLIB = :
 override RANLIB_FOR_TARGET = :
